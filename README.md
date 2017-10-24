@@ -15,6 +15,7 @@ Mit diesem Plugin habt ihr und eure User die Möglichkeit, euer Inplay besser im
 <li> Anzeige der Gesamtanzahl (offener) Szenen im Header
 <li> Szenentracker im Profil mit Zählung von Posts / sortiert nach Datum (auch Archiv)
 <li> Angabe einer eigenen Zeitrechnung für Foren fernab vom gregorianischen Kalender
+<li> Insgesamt-Übersicht über alle aktiven Inplay-Szene (mit Filter-Suche)
 </ul>
 
 <b>Admin-Funktionen</b>

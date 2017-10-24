@@ -31,11 +31,6 @@ $l['inplaytracker_next_post'] = "Nächster Post";
 $l['inplaytracker_scene_information'] = "Szenen-Informationen";
 $l['inplaytracker_last_post'] = "Letzter Post";
 $l['inplaytracker_characters'] = "Charaktere";
-$l['inplaytracker_options_pm'] = "PN-Benachrichtigung bei neuen Szenen/Antworten empfangen?";
-$l['inplaytracker_pm_scene_title'] = "Neue Szene eröffnet!";
-$l['inplaytracker_pm_scene'] = "Hi! Ich habe dir soeben eine neue Szene eröffnet! Du findest sie";
-$l['inplaytracker_pm_post_title'] = "Antwort auf unsere Szene!";
-$l['inplaytracker_pm_post'] = "Ich habe soeben eine Antwort auf unsere Szene erstellt! Nachlesen kannst du das Ganze";
 
 // Alerts
 $l['inplaytracker_newthread'] = "{1} hat dir eine neue Szene erstellt!";

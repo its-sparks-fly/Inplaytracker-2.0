@@ -1339,9 +1339,10 @@ function inplaytracker_showthread() {
 	$uid = $mybb->user['uid'];
 
 	$parentlist = $db->fetch_field($db->query("SELECT parentlist FROM mybb_forums WHERE fid = '$thread[fid]'"), "parentlist");
-	$inplaykategorie = $mybb->settings['inplaytracker_forum'];
-	$parentlist = ",".$parentlist.",";
-	if(preg_match("/,$inplaykategorie,/i", $parentlist)) {
+	 $inplaykategorie = $mybb->settings['inplaytracker_forum'];
+         $archiv = $mybb->settings['inplaytracker_archiv'];
+    	 $parentlist = ",".$parentlist.",";
+    	 if(preg_match("/,$inplaykategorie,/i", $parentlist) OR preg_match("/,$archiv,/i", $parentlist)) {
 		if($mybb->settings['inplaytracker_location'] == "1") {
 			eval("\$inplaytracker_location = \"".$templates->get("showthread_inplaytracker_location")."\";");
 		}

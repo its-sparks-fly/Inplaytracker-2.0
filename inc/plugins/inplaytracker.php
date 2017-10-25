@@ -1334,7 +1334,7 @@ function inplaytracker_profile() {
 }
 
 function inplaytracker_showthread() {
-	global $mybb, $lang, $user, $templates, $thread, $inplaytracker, $inplaytracker_location;
+	global $mybb, $db, $lang, $user, $templates, $thread, $inplaytracker, $inplaytracker_location;
 	$lang->load('inplaytracker');
 	$uid = $mybb->user['uid'];
 

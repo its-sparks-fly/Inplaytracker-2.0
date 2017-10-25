@@ -1338,42 +1338,46 @@ function inplaytracker_showthread() {
 	$lang->load('inplaytracker');
 	$uid = $mybb->user['uid'];
 
-	if($mybb->settings['inplaytracker_location'] == "1") {
-		eval("\$inplaytracker_location = \"".$templates->get("showthread_inplaytracker_location")."\";");
+	$parentlist = $db->fetch_field($db->query("SELECT parentlist FROM mybb_forums WHERE fid = '$thread[fid]'"), "parentlist");
+	$inplaykategorie = $mybb->settings['inplaytracker_forum'];
+	$parentlist = ",".$parentlist.",";
+	if(preg_match("/,$inplaykategorie,/i", $parentlist)) {
+		if($mybb->settings['inplaytracker_location'] == "1") {
+			eval("\$inplaytracker_location = \"".$templates->get("showthread_inplaytracker_location")."\";");
+		}
+		if($mybb->settings['inplaytracker_daytime'] == "1") {
+			eval("\$inplaytracker_daytime = \"".$templates->get("showthread_inplaytracker_daytime")."\";");
+		}
+		if($mybb->settings['inplaytracker_timeformat'] == "0") {
+			$thread['ipdate'] = date("d.m.Y", $thread['ipdate']);
+		}
+		$partners = explode(",", $thread['partners']);
+		$partnerusers = array();
+		foreach ($partners as $partner) {
+			$charakter = get_user($partner);
+			$taguser = build_profile_link($charakter['username'], $partner);
+			$partnerusers[] = $taguser;
+		}
+		$thread['partners'] = implode(" &raquo; ", $partnerusers);
+		$thread['partners'] = implode(" &raquo; ", $partnerusers);
+		if($thread['openscene'] == "1" && !in_array($uid, $partners)) {
+			eval("\$inplaytracker_openscene = \"".$templates->get("showthread_inplaytracker_openscene")."\";");
+		}
+		elseif($thread['openscene'] == "0"  && !in_array($uid, $partners)) {
+			eval("\$inplaytracker_openscene = \"".$templates->get("showthread_inplaytracker_halfopenscene")."\";");
+		}
+		else {
+			$inplaytracker_openscene = "";
+		}
+		if($thread['postorder'] == "0") {
+			eval("\$inplaytracker_order = \"".$templates->get("showthread_inplaytracker_order")."\";");
+		}
+		else {
+			$inplaytracker_order = "";
+		}
+		eval("\$inplaytracker = \"".$templates->get("showthread_inplaytracker")."\";");
 	}
-	if($mybb->settings['inplaytracker_daytime'] == "1") {
-		eval("\$inplaytracker_daytime = \"".$templates->get("showthread_inplaytracker_daytime")."\";");
-	}
-	if($mybb->settings['inplaytracker_timeformat'] == "0") {
-		$thread['ipdate'] = date("d.m.Y", $thread['ipdate']);
-	}
-	$partners = explode(",", $thread['partners']);
-	$partnerusers = array();
-	foreach ($partners as $partner) {
-		$charakter = get_user($partner);
-		$taguser = build_profile_link($charakter['username'], $partner);
-		$partnerusers[] = $taguser;
-	}
-	$thread['partners'] = implode(" &raquo; ", $partnerusers);
-	$thread['partners'] = implode(" &raquo; ", $partnerusers);
-	if($thread['openscene'] == "1" && !in_array($uid, $partners)) {
-		eval("\$inplaytracker_openscene = \"".$templates->get("showthread_inplaytracker_openscene")."\";");
-	}
-	elseif($thread['openscene'] == "0"  && !in_array($uid, $partners)) {
-		eval("\$inplaytracker_openscene = \"".$templates->get("showthread_inplaytracker_halfopenscene")."\";");
-	}
-	else {
-		$inplaytracker_openscene = "";
-	}
-	if($thread['postorder'] == "0") {
-		eval("\$inplaytracker_order = \"".$templates->get("showthread_inplaytracker_order")."\";");
-	}
-	else {
-		$inplaytracker_order = "";
-	}
-	eval("\$inplaytracker = \"".$templates->get("showthread_inplaytracker")."\";");
 }
-
 function inplaytracker_alerts() {
 	global $mybb, $lang;
 	$lang->load('inplaytracker');

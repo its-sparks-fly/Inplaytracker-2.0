@@ -17,8 +17,6 @@ if (class_exists('MybbStuff_MyAlerts_AlertTypeManager')) {
 }
 $plugins->add_hook("global_intermediate", "inplaytracker_global");
 $plugins->add_hook("member_profile_end", "inplaytracker_profile");
-$plugins->add_hook("usercp_do_options_end", "inplaytracker_usercp_options");
-$plugins->add_hook("usercp_options_start", "inplaytracker_usercp");
 $plugins->add_hook("showthread_start", "inplaytracker_showthread");
 
 $plugins->add_hook("admin_tools_menu", "inplaytracker_tools_menu");
@@ -240,7 +238,6 @@ function inplaytracker_activate()
 	find_replace_templatesets("header", "#".preg_quote('{$menu_calendar}')."#i", '{$menu_calendar} {$menu_inplaytracker} {$tracker_date}');
 	find_replace_templatesets("member_profile", "#".preg_quote('{$awaybit}')."#i", '{$awaybit} {$inplaytracker}');
 	find_replace_templatesets("member_profile", "#".preg_quote('{$referrals}')."#i", '{$referrals} {$inplaytracker_lastpost}');
-	find_replace_templatesets("usercp_options", "#".preg_quote('{$board_style}')."#i", '{$inplaytrackerpm}{$board_style}');
 	find_replace_templatesets("showthread", "#".preg_quote('<tr><td id="posts_container">')."#i", '<tr><td id="posts_container">{$inplaytracker}');
 
 	$insert_array = array(
@@ -671,7 +668,6 @@ function inplaytracker_deactivate()
   find_replace_templatesets("header", "#".preg_quote('{$menu_inplaytracker}')."#i", '', 0);
   find_replace_templatesets("member_profile", "#".preg_quote('{$inplaytracker}')."#i", '', 0);
   find_replace_templatesets("member_profile", "#".preg_quote('{$inplaytracker_lastpost}')."#i", '', 0);
-	find_replace_templatesets("usercp_options", "#".preg_quote('{$inplaytrackerpm}')."#i", '', 0);
 	find_replace_templatesets("showthread", "#".preg_quote('{$inplaytracker}')."#i", '', 0);
 
 	// Templates entfernen

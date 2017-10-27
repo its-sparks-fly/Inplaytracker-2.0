@@ -806,9 +806,10 @@ function inplaytracker_editpost()
 	$lang->load('inplaytracker');
 
   $inplaykategorie = $mybb->settings['inplaytracker_forum'];
+  $archiv = $mybb->settings['inplaytracker_archiv'];
 
 	$forum['parentlist'] = ",".$forum['parentlist'].",";
-	if(preg_match("/,$inplaykategorie,/i", $forum['parentlist'])) {
+	if(preg_match("/,$inplaykategorie,/i", $forum['parentlist']) OR preg_match("/,$archiv,/i", $forum['parentlist'])) {
     $pid = $mybb->get_input('pid', MyBB::INPUT_INT);
   	if($thread['firstpost'] == $pid) {
 	  	if(isset($mybb->input['previewpost']) || $post_errors) {
@@ -967,6 +968,7 @@ function inplaytracker_do_newreply()
   $ownuid = $mybb->user['uid'];
 	$partners = $thread['partners'];
 	$inplaykategorie = $mybb->settings['inplaytracker_forum'];
+	
 	$last_post = $db->fetch_field($db->query("SELECT pid FROM ".TABLE_PREFIX."posts WHERE tid = '$thread[tid]' ORDER BY pid DESC LIMIT 1"), "pid");
 	$forum['parentlist'] = ",".$forum['parentlist'].",";
 	if(preg_match("/,$inplaykategorie,/i", $forum['parentlist'])) {

@@ -1221,7 +1221,7 @@ function inplaytracker_global()
   while($user = $db->fetch_array($query)) {
     $username = $user['username'];
 		$ownuid = $user['uid'];
-    $query1 = $db->query("SELECT *, ".TABLE_PREFIX."threads.partners, ".TABLE_PREFIX."threads.postorder, ".TABLE_PREFIX."threads.lastposter FROM ".TABLE_PREFIX."threads
+    $query1 = $db->query("SELECT *, ".TABLE_PREFIX."threads.partners, ".TABLE_PREFIX."threads.postorder, ".TABLE_PREFIX."threads.lastposteruid FROM ".TABLE_PREFIX."threads
     LEFT JOIN ".TABLE_PREFIX."posts ON ".TABLE_PREFIX."threads.lastpost = ".TABLE_PREFIX."posts.dateline
     LEFT JOIN ".TABLE_PREFIX."forums ON ".TABLE_PREFIX."threads.fid = ".TABLE_PREFIX."forums.fid
     WHERE ".TABLE_PREFIX."forums.parentlist LIKE '$ipforum,%'");

@@ -1211,40 +1211,55 @@ function inplaytracker_misc()
 
 function inplaytracker_global()
 {
-  global $mybb, $db, $lang, $templates, $menu_inplaytracker;
+  global $mybb, $db, $lang, $templates, $menu_inplaytracker, $test;
 	$lang->load('inplaytracker');
+
   $ipforum = $mybb->settings['inplaytracker_forum'];
   $email = $mybb->user['email'];
+
   $query = $db->query("SELECT username, uid FROM ".TABLE_PREFIX."users WHERE ".TABLE_PREFIX."users.email = '$email' ORDER By ".TABLE_PREFIX."users.username ASC");
+
   $countgesamt = 0;
   $opengesamt = 0;
+
   while($user = $db->fetch_array($query)) {
+
     $username = $user['username'];
-		$ownuid = $user['uid'];
-    $query1 = $db->query("SELECT *, ".TABLE_PREFIX."threads.partners, ".TABLE_PREFIX."threads.postorder, ".TABLE_PREFIX."threads.lastposteruid FROM ".TABLE_PREFIX."threads
+	$ownuid = $user['uid'];
+
+    $query1 = $db->query("SELECT *, ".TABLE_PREFIX."threads.partners, ".TABLE_PREFIX."threads.postorder, ".TABLE_PREFIX."threads.lastposter, ".TABLE_PREFIX."threads.lastposteruid FROM ".TABLE_PREFIX."threads
     LEFT JOIN ".TABLE_PREFIX."posts ON ".TABLE_PREFIX."threads.lastpost = ".TABLE_PREFIX."posts.dateline
     LEFT JOIN ".TABLE_PREFIX."forums ON ".TABLE_PREFIX."threads.fid = ".TABLE_PREFIX."forums.fid
     WHERE ".TABLE_PREFIX."forums.parentlist LIKE '$ipforum,%'");
+
     while($szene = $db->fetch_array($query1)) {
+		$next = "";
 			$szenen_partner = ",".$szene['partners'].",";
 			if(preg_match("/,$ownuid,/i", $szenen_partner)) {
-      	$countgesamt++;
-      	$tagged = explode(",", $szene['partners']);
-      	$key = array_search($szene['lastposteruid'], $tagged);
-      	$key = $key + 1;
-      	$next = $tagged[$key];
-				$next = get_user($next);
-				$next = $next['username'];
-      	if(!$tagged[$key]) {
-        	$next = $tagged[0];
-      	}
-				if($next == $username && $szene['postorder'] == "1") {
-	        $opengesamt++;
-	      }
-      	$countscenes++;
-			}
-  	}
-	}
+      $countgesamt++;
+
+      $tagged = explode(",", $szene['partners']);
+
+      $key = array_search($szene['lastposteruid'], $tagged);
+      $key = $key + 1;
+      $next = $tagged[$key];
+	  if(!$tagged[$key]) {
+        $next = $tagged[0];
+      }
+				
+      $next = get_user($next);
+	  $next = $next['username'];
+
+      if($next == $username && $szene['postorder'] == "1") {
+        $opengesamt++;
+		  $test .= $szene[subject];
+      }
+
+
+		}
+    }
+  }
+
 	eval("\$menu_inplaytracker = \"".$templates->get("header_inplaytracker")."\";");
 }
 

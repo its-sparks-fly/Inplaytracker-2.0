@@ -537,6 +537,7 @@ if(use_xmlhttprequest == "1")
 	$insert_array = array(
 				'title'        => 'showthread_inplaytracker',
 				'template'    => $db->escape_string('<tr>
+				<td>
 	<table cellpadding="5" cellspacing="5" width="100%">
 <tr>
 	<td class="tcat" colspan="2">
@@ -564,6 +565,7 @@ if(use_xmlhttprequest == "1")
 {$inplaytracker_openscene}
 {$inplaytracker_order}
 	</table>
+	</td>
 </tr>'),
 				'sid'        => '-1',
 				'version'    => '',

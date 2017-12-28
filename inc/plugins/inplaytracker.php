@@ -492,7 +492,7 @@ if(use_xmlhttprequest == "1")
 		'template'	=> $db->escape_string('<br />
 <table border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="5px" class="tborder tfixed">
 <tr>
-<td class="thead"><strong>{$lang->inplaytracker_scenes} ({$inplayposts} {$lang->inplaytracker_posts})</strong></td>
+<td class="thead"><strong>{$lang->inplaytracker_scenes} ({$inplayposts} {$lang->inplaytracker_posts} / {$numscenes} {$lang->inplaytracker_scenes})</strong></td>
 </tr>
 <tr>
 <td class="trow1">
@@ -1266,7 +1266,7 @@ function inplaytracker_global()
 }
 
 function inplaytracker_profile() {
-  global $db, $mybb, $lang, $templates, $memprofile, $inplaytracker_lastpost, $inplaytracker, $inplaytracker_bit;
+  global $db, $mybb, $lang, $templates, $memprofile, $inplaytracker_lastpost, $inplaytracker, $inplaytracker_bit, $numscenes;
 	$lang->load('inplaytracker');
 
   $ipforum = $mybb->settings['inplaytracker_forum'];
@@ -1308,10 +1308,14 @@ function inplaytracker_profile() {
 					foreach ($partners as $partner) {
 						$charakter = get_user($partner);
 						$taguser = build_profile_link($charakter['username'], $partner);
+						if(empty($charakter)) {
+							$taguser = $db->fetch_field($db->query("SELECT username FROM ".TABLE_PREFIX."posts WHERE tid = '$szenen[tid]' AND uid = '$partner'"), "username");
+						}
 						$partnerusers[] = $taguser;
 					}
 					$szenen['partners'] = implode(" &raquo; ", $partnerusers);
 					$szenen['ipdate'] = date("d.m.Y", $szenen['ipdate']);
+					$numscenes;;
 	    		eval("\$inplaytracker_bit .= \"".$templates->get("member_profile_inplaytracker_bit")."\";");
 				}
 			}

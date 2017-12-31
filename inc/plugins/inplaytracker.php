@@ -238,7 +238,7 @@ function inplaytracker_activate()
 	find_replace_templatesets("header", "#".preg_quote('{$menu_calendar}')."#i", '{$menu_calendar} {$menu_inplaytracker} {$tracker_date}');
 	find_replace_templatesets("member_profile", "#".preg_quote('{$awaybit}')."#i", '{$awaybit} {$inplaytracker}');
 	find_replace_templatesets("member_profile", "#".preg_quote('{$referrals}')."#i", '{$referrals} {$inplaytracker_lastpost}');
-	find_replace_templatesets("showthread", "#".preg_quote('<tr><td id="posts_container">')."#i", '<tr><td id="posts_container">{$inplaytracker}');
+	find_replace_templatesets("showthread", "#".preg_quote('<tr><td id="posts_container">')."#i", '{$inplaytracker}<tr><td id="posts_container">');
 
 	$insert_array = array(
 		'title'		=> 'newthread_inplaytracker_partners',
@@ -1299,6 +1299,7 @@ function inplaytracker_profile() {
 			GROUP by ".TABLE_PREFIX."threads.tid
 			ORDER by ".TABLE_PREFIX."threads.ipdate ASC
 			");
+			
 			while($szenen = $db->fetch_array($query)) {
 				$ownuid = $memprofile['uid'];
 				$szenen_partner = ",".$szenen['partners'].",";
@@ -1315,7 +1316,7 @@ function inplaytracker_profile() {
 					}
 					$szenen['partners'] = implode(" &raquo; ", $partnerusers);
 					$szenen['ipdate'] = date("d.m.Y", $szenen['ipdate']);
-					$numscenes;;
+					$numscenes++;
 	    		eval("\$inplaytracker_bit .= \"".$templates->get("member_profile_inplaytracker_bit")."\";");
 				}
 			}

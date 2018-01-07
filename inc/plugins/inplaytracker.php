@@ -1358,7 +1358,7 @@ function inplaytracker_showthread() {
 	$lang->load('inplaytracker');
 	$uid = $mybb->user['uid'];
 
-	$parentlist = $db->fetch_field($db->query("SELECT parentlist FROM mybb_forums WHERE fid = '$thread[fid]'"), "parentlist");
+	$parentlist = $db->fetch_field($db->query("SELECT parentlist FROM ".TABLE_PREFIX."forums WHERE fid = '$thread[fid]'"), "parentlist");
 	 $inplaykategorie = $mybb->settings['inplaytracker_forum'];
          $archiv = $mybb->settings['inplaytracker_archiv'];
     	 $parentlist = ",".$parentlist.",";

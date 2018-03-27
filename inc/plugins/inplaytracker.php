@@ -688,48 +688,69 @@ function inplaytracker_newthread()
 		if(isset($mybb->input['previewpost']) || $post_errors)
 	 	{
 			$partners = htmlspecialchars_uni($mybb->get_input('partners'));
-		  $ipdate = htmlspecialchars_uni($mybb->get_input('ipdate'));
+		        $ipdate = strtotime($mybb->get_input('day')." ".$mybb->get_input('month')." ".$mybb->get_input('year'));
+			$active_day = date("j", $ipdate);
+			$year = date("Y", $ipdate);
+			$active_day = $mybb->get_input('day');
 			$iport = htmlspecialchars_uni($mybb->get_input('iport'));
 			$ipdaytime = htmlspecialchars_uni($mybb->get_input('ipdaytime'));
 	 	}
-	 	else
-	 	{
-		  $partners = htmlspecialchars_uni($thread['partners']);
-		  $ipdate = htmlspecialchars_uni($thread['ipdate']);
-			$iport = htmlspecialchars_uni($thread['iport']);
-			$ipdaytime = htmlspecialchars_uni($thread['ipdaytime']);
-	 	}
-
-	 	for($i = 1 ; $i < 32 ; $i++) {
-		 	$day_bit .= "<option value=\"$i\">$i</option>";
-	 	}
-
+		
 		if($mybb->settings['inplaytracker_timeformat'] == "0") {
-	 		$months = array(
- 				"january" => "Januar",
- 				"february" => "Februar",
- 				"march" => "März",
- 				"april" => "April",
- 				"may" => "Mai",
- 				"june" => "Juni",
- 				"july" => "Juli",
- 				"august" => "August",
- 				"september" => "September",
- 				"october" => "Oktober",
- 				"november" => "November",
- 				"december" => "Dezember"
- 			);
+		 		for($i = 1 ; $i < 32 ; $i++) {
+					$checked_day = "";
+			 	
+			 		if($active_day == $i) {
+				 		$checked_day = "selected=\"selected\"";
+			 		}
+			 		$day_bit .= "<option value=\"$i\" {$checked_day}>$i</option>";
+		 		}
 
-			foreach($months as $key => $month) {
-				$month_bit .= "<option value=\"$key\">$month</option>";
+		 		$months = array(
+					"January" => "Januar",
+					"February" => "Februar",
+					"March" => "März",
+					"April" => "April",
+					"May" => "Mai",
+					"June" => "Juni",
+					"July" => "Juli",
+					"August" => "August",
+					"September" => "September",
+					"October" => "Oktober",
+					"November" => "November",
+					"December" => "Dezember"
+				);
+
+				foreach($months as $key => $month) {
+					$checked_month = "";
+					$active_month = date("F", $ipdate);
+					if($active_month == $key) {
+						$checked_month = "selected=\"selected\"";
+					}
+					$month_bit .= "<option value=\"$key\" {$checked_month}>$month</option>";
+				}
 			}
-		}
-		else {
-			$months = explode(", ", $mybb->settings['inplaytracker_months']);
-			foreach($months as $month) {
-				$month_bit .= "<option value=\"$month\">$month</option>";
+			else {
+				for($i = 1 ; $i < 32 ; $i++) {
+					$checked_day = "";
+					if($active_day == $i) {
+						$checked_day = "selected=\"selected\"";
+					}
+					$day_bit .= "<option value=\"$i\" {$checked_day}>$i</option>";
+				}
+
+				$months = explode(", ", $mybb->settings['inplaytracker_months']);
+				foreach($months as $month) {
+					$checked_month = "";
+					$active_month = $mybb->get_input('month');
+					if($active_month == $month) {
+						$checked_month = "selected=\"selected\"";
+					}
+					$month_bit .= "<option value=\"$month\" {$checked_month}>$month</option>";
+				}
+
+				$year = $mybb->get_input('year');
 			}
-		}
 
 		$private = array("-1" => "{$lang->inplaytracker_closed}", "0" => "{$lang->inplaytracker_halfopen}", "1" => "{$lang->inplaytracker_open}");
 		foreach($private as $key => $value) {

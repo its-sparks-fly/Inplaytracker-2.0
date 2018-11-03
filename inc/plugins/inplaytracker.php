@@ -233,8 +233,8 @@ function inplaytracker_activate()
 
   // Variablen einfügen
   include MYBB_ROOT."/inc/adminfunctions_templates.php";
-	find_replace_templatesets("newthread", "#".preg_quote('{$loginbox}')."#i", '{$loginbox} {$tracker_partners} {$tracker_date} {$tracker_ort} {$tracker_daytime}');
-	find_replace_templatesets("editpost", "#".preg_quote('{$loginbox}')."#i", '{$loginbox} {$tracker_partners} {$tracker_date} {$tracker_ort} {$tracker_daytime}');
+	find_replace_templatesets("newthread", "#".preg_quote('{$posticons}')."#i", '{$posticons} {$tracker_partners} {$tracker_date} {$tracker_ort} {$tracker_daytime}');
+	find_replace_templatesets("editpost", "#".preg_quote('{$posticons}')."#i", '{$posticons} {$tracker_partners} {$tracker_date} {$tracker_ort} {$tracker_daytime}');
 	find_replace_templatesets("header", "#".preg_quote('{$menu_calendar}')."#i", '{$menu_calendar} {$menu_inplaytracker} {$tracker_date}');
 	find_replace_templatesets("member_profile", "#".preg_quote('{$awaybit}')."#i", '{$awaybit} {$inplaytracker}');
 	find_replace_templatesets("member_profile", "#".preg_quote('{$referrals}')."#i", '{$referrals} {$inplaytracker_lastpost}');
